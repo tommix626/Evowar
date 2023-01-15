@@ -4,8 +4,8 @@ A RTS game where gamer fully invoived in combat.
 ## Description
 WIP
 
-##Resources
+## Resources
 WIP
 
-##Buildings
+## Buildings
 WIP
