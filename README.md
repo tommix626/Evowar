@@ -1,2 +1,11 @@
 # Evowar
-A RTS game that gamer fully invoived in combat
+A RTS game where gamer fully invoived in combat.
+
+## Description
+WIP
+
+##Resources
+WIP
+
+##Buildings
+WIP
