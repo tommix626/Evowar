@@ -21,7 +21,7 @@ this is another game project aim at create a defense-attacking war game
             inhanced speed
     0.97    troop stategy
     0.98    various troops and controls
-            
+    0.98a1  file strucutre modification & expConsumption        
             
 //improvs
     -dot size smaller,circle, dot color brighter,ban red(v0.92)
@@ -45,19 +45,6 @@ this is another game project aim at create a defense-attacking war game
     -draw buffs use towrs enemy to hollow circle
 @author: Tom
 """
-
-
-import sys
-import pygame
-import random
-import math
-
-from cls_player import CLS_Player
-from cls_building import CLS_Building
-from cls_game_agent import CLS_GameAgent
-from global_variables import stgNameList,STRATEGY_NUM,SCREEN_H,SCREEN_W,GRID_SIZE,hpList
-
-
 '''
 I decided to add some consumption to exp for spawning different troops, towers or even respawning 
 The current values are as follows
@@ -76,6 +63,19 @@ hope you can understand
 still, you can change the from...import to import to ease further modifications
 @Ling
 '''
+
+
+
+import sys
+import pygame
+import random
+import math
+
+from cls_player import CLS_Player
+from cls_building import CLS_Building
+from cls_game_agent import CLS_GameAgent
+from global_variables import stgNameList,STRATEGY_NUM,SCREEN_H,SCREEN_W,GRID_SIZE,hpList
+
 
 
 
