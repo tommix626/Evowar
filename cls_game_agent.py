@@ -4,6 +4,7 @@ from global_variables import FENCE_COLOR,GRID_SIZE,DOT_R_RANGE,expList,expConsum
 from cls_troop import CLS_Troop
 from cls_building import CLS_Building,CLS_Range_Building
 from cls_dot import CLS_Dot
+from minimap import MinyMap
 
 class CLS_GameAgent(object):
     def __init__(self,screen,player,Boss):
@@ -16,6 +17,7 @@ class CLS_GameAgent(object):
         self.surface=screen
         self.totalList=[[[self.pilot]],[[self.boss]],self.troopList,self.towerList]
         self.troopstrategy=0
+        self.minymap=MinyMap(self,screen)
     
     def draw_setting(self):#draw game map
         for dot in self.dotList:
@@ -43,6 +45,9 @@ class CLS_GameAgent(object):
         self.pilot_eat_dot_check()
         self.boss.action(self.totalList,self.bulletList)
         self.draw_setting()
+        #minymap section, after most calculations
+        self.minymap.sync()
+        self.minymap.draw_main()
     def pilot_eat_dot_check(self):
         for dot in self.dotList:
             dotpos = dot.pos
