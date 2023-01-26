@@ -128,6 +128,8 @@ while True:
                 agent.build_item("poisoner_T",1,0,"range")
             if event.key==pygame.K_4:
                 agent.build_item("poisoner_T",0,0,"range")
+            if event.key==pygame.K_m:
+                agent.display_map()
             if event.key==pygame.K_SPACE:
                 flag=1
                 while(flag):
@@ -135,7 +137,7 @@ while True:
                         if event.type == pygame.QUIT:
                             pygame.quit()
                             sys.exit()
-                        #其他鼠标键盘事件
+                        #其他鼠标键盘事件mmmmmmm
                         if event.type==pygame.KEYDOWN:
                             if event.key==pygame.K_SPACE:
                                 flag=0

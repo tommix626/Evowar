@@ -4,7 +4,7 @@ from global_variables import FENCE_COLOR,GRID_SIZE,DOT_R_RANGE,expList,expConsum
 from cls_troop import CLS_Troop
 from cls_building import CLS_Building,CLS_Range_Building
 from cls_dot import CLS_Dot
-from minimap import MinyMap
+from minimap import MinyMap,GiantMap
 
 class CLS_GameAgent(object):
     def __init__(self,screen,player,Boss):
@@ -17,7 +17,9 @@ class CLS_GameAgent(object):
         self.surface=screen
         self.totalList=[[[self.pilot]],[[self.boss]],self.troopList,self.towerList]
         self.troopstrategy=0
-        self.minymap=MinyMap(self,screen)
+        self.minyMap=MinyMap(self,screen)
+        self.giantMap=GiantMap(self,screen)
+        self.mapFlag=-1
     
     def draw_setting(self):#draw game map
         for dot in self.dotList:
@@ -46,8 +48,12 @@ class CLS_GameAgent(object):
         self.boss.action(self.totalList,self.bulletList)
         self.draw_setting()
         #minymap section, after most calculations
-        self.minymap.sync()
-        self.minymap.draw_main()
+        self.minyMap.sync()
+        self.giantMap.sync()
+        self.minyMap.draw_main()
+        if self.mapFlag==1:
+            self.giantMap.draw_main()
+        
     def pilot_eat_dot_check(self):
         for dot in self.dotList:
             dotpos = dot.pos
@@ -71,6 +77,9 @@ class CLS_GameAgent(object):
         dot = CLS_Dot(self.surface,[x,y],r,color)
         self.dotList.append(dot)
         return
+    def display_map(self):
+        #1 stands for openmap -1 stands for a closed map
+        self.mapFlag=self.mapFlag*(-1)
     def displaytips(self,word,num):
         #show tips to remind the player
         return
