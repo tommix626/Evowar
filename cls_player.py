@@ -1,13 +1,13 @@
 import pygame
 from global_variables import SCREEN_W,SCREEN_H,SCREEN_SIZE,GRID_SIZE,spdList,colorList,radList,atkList,hpList,expList,expConsumption
 from cls_bullet import CLS_Bullet
-
+from renderer import Renderer
 
 
 
 PLAYER_HP_INIT=1000
 class CLS_Player(object):
-    def __init__(self,scr,lv):
+    def __init__(self,renderer,lv):
         self.speed=[0,0] # instant speed
         self.bspd = 0 # bonus speed-multiplyer
         self.bframe = 0 #bonus frame time
@@ -15,7 +15,8 @@ class CLS_Player(object):
         self.lv = lv
         self.fpos=[SCREEN_W//2,SCREEN_H//2] #always centering(fix pos)
         self.pos=[GRID_SIZE[0]//2,GRID_SIZE[1]//2] #real pos
-        self.surface=scr
+        #self.surface=scr#this should be deleted after full transfer
+        self.renderer=renderer
         self.color=colorList[self.lv]
         self.spdLv = spdList[self.lv] # the speed decrease as player's lv increase
         self.rad=radList[self.lv]
@@ -42,8 +43,8 @@ class CLS_Player(object):
         return
     #-----------------------------------------------
     def draw(self):
-        pygame.draw.circle(self.surface,self.color,self.fpos,self.rad,0)
-        pygame.draw.rect(self.surface,self.rectcolor,self.rect,2)
+        self.renderer.draw_player(self)
+        
     def move(self):
         if(self.pos[0]+self.speed[0]-self.rad>=0 and self.pos[0]+self.speed[0]+self.rad<=GRID_SIZE[0]):
             self.pos[0]+=self.speed[0]*(self.buffspeed+1)
@@ -88,7 +89,7 @@ class CLS_Player(object):
     def shoot_line(self,ttList,bulletList):# shoot a bullet to where the player faces
         tspd=[self.speed[0]*self.bltspd,self.speed[1]*self.bltspd]
         tpos=[self.pos[0],self.pos[1]]
-        bullet = CLS_Bullet(self.surface,self,self.bltrad,self.bltdur,tpos,0,tspd,0,self.bltatk+self.buffatk,ttList,0)
+        bullet = CLS_Bullet(self.renderer,self,self.bltrad,self.bltdur,tpos,0,tspd,0,self.bltatk+self.buffatk,ttList,0)
         bulletList.append(bullet)
         #-n exp per fire
         self.exp=self.exp-expConsumption[0]

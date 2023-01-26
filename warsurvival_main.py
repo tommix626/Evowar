@@ -22,7 +22,9 @@ this is another game project aim at create a defense-attacking war game
     0.97    troop stategy
     0.98    various troops and controls
     0.98a1  file strucutre modification & expConsumption
-    0.98a2  minymap        
+    0.98a2  minymap 
+    0.98a3  bigmap
+    0.99    new renderer       
             
 //improvs
     -dot size smaller,circle, dot color brighter,ban red(v0.92)
@@ -70,17 +72,20 @@ I need to change the structure with gameagent.
 if you feel ok just tell me :P
 @Ling
 '''
+'''
+The renderer is changed into a single file. There are still links to the original functions, but I still suggest a direct link to renderer class
+@Ling
+'''
 
 
 import sys
 import pygame
-import random
-import math
+
 
 from cls_player import CLS_Player
 from cls_building import CLS_Building
 from cls_game_agent import CLS_GameAgent
-
+from renderer import Renderer
 from global_variables import stgNameList,STRATEGY_NUM,SCREEN_H,SCREEN_W,GRID_SIZE,hpList
 
 
@@ -91,14 +96,15 @@ from global_variables import stgNameList,STRATEGY_NUM,SCREEN_H,SCREEN_W,GRID_SIZ
 #pygame init
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_W,SCREEN_H))
-fontScore = pygame.font.Font(None,28)
+
 clock = pygame.time.Clock()
 #-----user data-----
 #dotList = []
 keep_shooting=-1
-player = CLS_Player(screen,1)
-boss=CLS_Building(screen,[50,50],1,player,9,40,10000)
-agent = CLS_GameAgent(screen,player,boss)
+renderer = Renderer(screen)
+player = CLS_Player(renderer,1)
+boss=CLS_Building(renderer,[50,50],1,player,9,40,10000)
+agent = CLS_GameAgent(renderer,player,boss)
 boss.totalList=agent.totalList
 for i in range(300):
     agent.create_dot()
@@ -185,22 +191,7 @@ while True:
         else:
             keep_shooting+=1
     #提示字
-    img_text = fontScore.render('exp:'+str(agent.pilot.exp),True,(250,250,250))
-    screen.blit( img_text ,(10,10))
-    img_text = fontScore.render('strategy:'+str(stgNameList[agent.troopstrategy]),True,(250,250,250))
-    screen.blit( img_text ,(10,30))
-    img_text = fontScore.render('HP:'+str(agent.pilot.hp)+"/"+str(hpList[agent.pilot.lv]),True,(250,250,250))
-    screen.blit( img_text ,(10,50))
-    for item in agent.towerList[0]+agent.towerList[1]+agent.troopList[0]+agent.troopList[1]:
-        scrpos=item.draw(player.fpos,player.pos,2)
-        if(scrpos==-1):
-            continue
-        img_text = fontScore.render('HP:'+str(item.hp),True,(250,250,250))
-        screen.blit( img_text ,scrpos)
-    scrpos=agent.boss.draw(player.fpos,player.pos,2)
-    if(scrpos!=-1):
-        img_text = fontScore.render('HP:'+str(agent.boss.hp),True,(250,250,250))
-        screen.blit( img_text ,scrpos)
+    renderer.draw_text(player,agent)
     pygame.display.update()
     clock.tick(100)
 

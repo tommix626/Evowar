@@ -6,10 +6,10 @@ from calc import cal_dist,cal_scrpos,cal_speed
 
 
 class CLS_Troop(CLS_item):
-    def __init__(self,scr,pos,side,polySideNum=-1,strategy=0,rad=5,speedratio=1.5,hp=500,atkrange=50,atk=3,interval=15):
+    def __init__(self,renderer,pos,side,polySideNum=-1,strategy=0,rad=5,speedratio=1.5,hp=500,atkrange=50,atk=3,interval=15):
         #strategies 0 aggressive 1 passive 2 inagressive 3 passive calls 4 stay
         color=(255*side,0,255*(1-side))# color change according to side
-        super().__init__(scr,rad,pos,[0,0],hp,color,atkrange+random.randint(-5,5),atk,interval++random.randint(-2,2),side,polySideNum)
+        super().__init__(renderer,rad,pos,[0,0],hp,color,atkrange+random.randint(-5,5),atk,interval++random.randint(-2,2),side,polySideNum)
         self.cd=interval
         self.tgtList=self#start with no target
         self.target=self
@@ -82,6 +82,6 @@ class CLS_Troop(CLS_item):
             if(self.cd>0):
                 return
             self.cd=self.interval
-            bullet = CLS_Bullet(self.surface,self.pilot,self.bltrad,self.bltdur,tpos,1,self.bltspd,tgt,self.bltatk+self.buffatk)
+            bullet = CLS_Bullet(self.renderer,self.pilot,self.bltrad,self.bltdur,tpos,1,self.bltspd,tgt,self.bltatk+self.buffatk)
             bulletList.append(bullet)
         return

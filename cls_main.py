@@ -2,17 +2,24 @@ from global_variables import SCREEN_H, SCREEN_W, SCREEN_SIZE
 from calc import cal_dist,cal_scrpos
 import pygame
 import math
-
+from renderer import Renderer
 
 BULLET_RAD_INIT,BULLET_DUR_INIT,BULLET_ATK_INIT,BULLET_SPD_INIT=3,80,50,3
 SIGHT_RAD_INIT=min(SCREEN_SIZE)//2.2
+'''
+2023/1/26
+It is to note that I have already changed screen to renderer. The drawing functions still work, but I still suggest using
+the one in renderer
+@Ling
+'''
 class CLS_item(object):
-    def __init__(self,screen,rad,pos,speed,hp,color,atkrange,atk,interval,side,polySideNum):
+    def __init__(self,renderer,rad,pos,speed,hp,color,atkrange,atk,interval,side,polySideNum):
         self.rad=rad
         self.pos=pos
         self.speed=speed
         self.hp=hp
-        self.surface=screen
+        #this should be deleted after a full transfer to renderer
+        #self.surface=screen
         self.color=color
         self.dcolor=(255-color[0],255-color[1],255-color[2])
         self.atkrange=atkrange
@@ -28,43 +35,32 @@ class CLS_item(object):
         self.buffList=[]#for rebuffing contain inverse-buff affect and time to release |("atk",3,20,BuildingX)->BuildingX give this item a +3atk buff lasting 20 frame |
         self.buffatk,self.buffspeed=0,0
         self.bgcolor=None
+        '''
+        if renderer==None:
+           self.renderer=Renderer(screen) 
+        else:
+            self.renderer=renderer
         return
-    def draw(self,fpos,ppos,tag=0):#use player Position to draw self
-        if(tag==1):
-            print("draw")
-        dx,dy=cal_scrpos(self.pos,fpos,ppos)
-        if(dx+self.rad<0 or dx-self.rad>SCREEN_W or dy+self.rad<0 or dy-self.rad>SCREEN_H):
-            if(tag==1):
-                print("out of range")
-            return -1
-        if(tag==0):
-            pygame.draw.circle(self.surface,self.color,[dx,dy],self.rad,0)
-            self.draw_extras(dx,dy,self.poly)
-        elif(tag==2):
-            if(dx<0 or dx>SCREEN_W or dy<0 or dy>SCREEN_H):
-                return -1
-            return(dx-self.rad,dy+self.rad)
-        if(tag==1):
-            print("success",self.color,dx,dy)
-        return
-    def draw_extras(self,x,y,sideNum=0):#FIXME can be reload to mark different buildings (will consider to use it to distinct between enemy and self)
-        pointList=[]
-        r=self.rad/2
-        if(sideNum==0):
-            pygame.draw.circle(self.surface,self.dcolor,[x,y],r,0)
-            return
-        if(sideNum==-1):
-            return
-        for i in range(sideNum):
-            ang=2*math.pi/sideNum*i
-            pointList.append((x+r*math.cos(ang),y+r*math.sin(ang)))
-        pygame.draw.polygon(self.surface,self.dcolor,pointList,0)
-        return
+        '''
+        self.renderer=renderer
+
+    def draw(self,fpos,ppos,tag=0):
+        #moved to renderer
+        return self.renderer.draw_cls(self,fpos,ppos,tag)
+        
+        
+    def draw_extras(self,x,y,sideNum=0):
+        #moved to renderer
+        #FIXME can be reload to mark different buildings (will consider to use it to distinct between enemy and self)
+        self.renderer.draw_cls_extras(self,x,y,sideNum)
+        
+
     def draw_background(self,dx,dy):#for special towers
         if(self.bgcolor==None):
             return
-        pygame.draw.circle(self.surface,self.bgcolor,[dx,dy],self.atkrange,0)
+        self.renderer.draw_cls_background(self,dx,dy)
         return
+
     def check_buff(self):
         self.buffatk,self.buffspeed=0,0
         #one building can only cause one buff of a kind

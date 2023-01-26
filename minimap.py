@@ -1,5 +1,6 @@
 import pygame
 from global_variables import SCREEN_W,SCREEN_H,GRID_SIZE
+from renderer import Renderer
 '''
 2023/1/25
 the minymap class is used inside the cls game agent
@@ -12,13 +13,13 @@ I found a bug that the opponent troops and towers are displayed wrongly in the m
 BUG @Ling
 '''
 class MinyMap:
-    def __init__(self,gameAgent,screen):
+    def __init__(self,gameAgent,renderer=Renderer(None)):
         self.gameAgent=gameAgent
         self.dotList=[]
         self.troopList=[[],[]]
         self.towerList=[[],[]]
         self.playerLoc=[]
-        self.surface=screen
+        self.renderer=renderer
 
         self.y_len=int(SCREEN_H/5)
         self.y_g_len=SCREEN_H
@@ -34,8 +35,11 @@ class MinyMap:
         self.playerLoc=self.gameAgent.pilot.pos
     def draw_background(self):
         #the difference of a pixel is unnoticable
-        pygame.draw.rect(self.surface,(255,255,255),(SCREEN_W-self.x_len-3,0,self.x_len+2,self.y_len+2))
-        pygame.draw.rect(self.surface,(0,0,0),(SCREEN_W-self.x_len-2,1,self.x_len,self.y_len))
+        x_start_location=SCREEN_W-self.x_len
+        x_len=self.x_len
+        y_len=self.y_len
+        self.renderer.draw_minimap_background(x_start_location,x_len,y_len)
+        
     
     def draw(self,x,y,radius,color): 
         """
@@ -45,7 +49,8 @@ class MinyMap:
         """
         fx= SCREEN_W-self.x_len+int(x/self.r)
         fy=int(y/self.r)
-        pygame.draw.circle(self.surface,color,(fx,fy),radius)
+        self.renderer.draw_minymap_elements(color,fx,fy,radius)
+
         #print(fx,fy)
     def draw_main(self):
         self.draw_background()
@@ -67,15 +72,15 @@ press m to display giantmap
 '''
 class GiantMap(MinyMap):
     def draw_background(self):
-        pygame.draw.rect(self.surface,(255,255,255),((SCREEN_W-self.x_g_len)/2-3,0,self.x_g_len+2,self.y_g_len+2))
-        pygame.draw.rect(self.surface,(0,0,0),((SCREEN_W-self.x_g_len)/2-2,1,self.x_g_len,self.y_g_len))
+        x_start_location=(SCREEN_W-self.x_g_len)/2
+        x_len=self.x_g_len
+        y_len=self.y_g_len
+        self.renderer.draw_minimap_background(x_start_location,x_len,y_len)
+        #pygame.draw.rect(self.surface,(255,255,255),((SCREEN_W-self.x_g_len)/2-3,0,self.x_g_len+2,self.y_g_len+2))
+        #pygame.draw.rect(self.surface,(0,0,0),((SCREEN_W-self.x_g_len)/2-2,1,self.x_g_len,self.y_g_len))
+
     def draw(self,x,y,radius,color): 
-        """
-        x= real x
-        y= real y
-        color=(r,g,b)
-        """
         radius=radius*self.r/self.g_r
         fx= (SCREEN_W-self.x_g_len)/2+int(x/self.g_r)
         fy=int(y/self.g_r)
-        pygame.draw.circle(self.surface,color,(fx,fy),radius)
+        self.renderer.draw_minymap_elements(color,fx,fy,radius)

@@ -5,20 +5,21 @@ from cls_troop import CLS_Troop
 from cls_building import CLS_Building,CLS_Range_Building
 from cls_dot import CLS_Dot
 from minimap import MinyMap,GiantMap
-
+from renderer import Renderer
 class CLS_GameAgent(object):
-    def __init__(self,screen,player,Boss):
+    def __init__(self,renderer,player,Boss):
         self.pilot = player
         self.boss = Boss
         self.dotList=[]
         self.troopList=[[],[]] #self troop,opponent troop
         self.bulletList=[]
         self.towerList=[[],[]]
-        self.surface=screen
+        #self.surface=screen
         self.totalList=[[[self.pilot]],[[self.boss]],self.troopList,self.towerList]
         self.troopstrategy=0
-        self.minyMap=MinyMap(self,screen)
-        self.giantMap=GiantMap(self,screen)
+        self.renderer=renderer
+        self.minyMap=MinyMap(self,self.renderer)
+        self.giantMap=GiantMap(self,self.renderer)
         self.mapFlag=-1
     
     def draw_setting(self):#draw game map
@@ -67,19 +68,21 @@ class CLS_GameAgent(object):
         return
     def draw_fence(self):
         x,y = self.pilot.fpos[0]-self.pilot.pos[0],self.pilot.fpos[1]-self.pilot.pos[1]
-        pygame.draw.rect(self.pilot.surface,FENCE_COLOR,(x,y,GRID_SIZE[0],GRID_SIZE[1]),2)
+        self.renderer.draw_fence(FENCE_COLOR,x,y)
         return
     def create_dot(self):
         x=random.randint(0+DOT_R_RANGE[1],GRID_SIZE[0]-DOT_R_RANGE[1])
         y=random.randint(0+DOT_R_RANGE[1],GRID_SIZE[1]-DOT_R_RANGE[1])
         r=random.randint(DOT_R_RANGE[0],DOT_R_RANGE[1])
         color=(random.randint(50,150),random.randint(100,255),random.randint(100,255))
-        dot = CLS_Dot(self.surface,[x,y],r,color)
+        dot = CLS_Dot(self.renderer,[x,y],r,color)
         self.dotList.append(dot)
         return
+
     def display_map(self):
         #1 stands for openmap -1 stands for a closed map
         self.mapFlag=self.mapFlag*(-1)
+
     def displaytips(self,word,num):
         #show tips to remind the player
         return
@@ -89,13 +92,13 @@ class CLS_GameAgent(object):
             tpos=[self.pilot.pos[0],self.pilot.pos[1]]
             #here
             #self.pilot.exp=self.pilot.exp-expConsumption[3]
-            self.towerList[side].append(CLS_Building(self.surface,tpos,side,self.pilot,3))
+            self.towerList[side].append(CLS_Building(self.renderer,tpos,side,self.pilot,3))
         elif(itemtag=="gunner"):
             tpos=[self.pilot.pos[0]+random.randint(-20,20),self.pilot.pos[1]+random.randint(-20,20)]
-            self.troopList[side].append(CLS_Troop(self.surface,tpos,side,0))
+            self.troopList[side].append(CLS_Troop(self.renderer,tpos,side,0))
         elif(itemtag=="sniper"):
             tpos=[self.pilot.pos[0]+random.randint(-20,20),self.pilot.pos[1]+random.randint(-20,20)]
-            self.troopList[side].append(CLS_Troop(self.surface,tpos,side,0,0,7,0.5,300,300,200,300))
+            self.troopList[side].append(CLS_Troop(self.renderer,tpos,side,0,0,7,0.5,300,300,200,300))
         elif(itemtag=="factory"):#create troops every several hundreds frame(various kinds)
             pass
         elif(itemtag=="hptower"):#shoot atk<0 bullet(+HP) or have a range healing affect
@@ -104,19 +107,19 @@ class CLS_GameAgent(object):
             self.pilot.exp=self.pilot.exp-expConsumption[2]
             if(dtype=="range"):
                 tpos=[self.pilot.pos[0]+random.randint(-20,20),self.pilot.pos[1]+random.randint(-20,20)]
-                self.troopList[side].append(CLS_Range_Building(self.surface,tpos,side,self.pilot,(30,50,0),"speed-",0.3,3,10,2000,300,2))
+                self.troopList[side].append(CLS_Range_Building(self.renderer,tpos,side,self.pilot,(30,50,0),"speed-",0.3,3,10,2000,300,2))
             elif(dtype=="blt"):#FIXME the side prob is not solved ,therfore unusable
                 tpos=[self.pilot.pos[0]+random.randint(-20,20),self.pilot.pos[1]+random.randint(-20,20)]
-                self.troopList[side].append(CLS_Building(self.surface,tpos,1-side,self.pilot,3,10,1000,200,-10,30))
+                self.troopList[side].append(CLS_Building(self.renderer,tpos,1-side,self.pilot,3,10,1000,200,-10,30))
             return
         elif(itemtag=="poisoner_T"):#with poison around it self,kill all who goes into it(atk should be very low)
             self.pilot.exp=self.pilot.exp-expConsumption[2]
             if(dtype=="range"):
                 tpos=[self.pilot.pos[0]+random.randint(-20,20),self.pilot.pos[1]+random.randint(-20,20)]
-                self.troopList[side].append(CLS_Range_Building(self.surface,tpos,side,self.pilot,(50,0,0),"hp-",0.5,-1,15,300))
+                self.troopList[side].append(CLS_Range_Building(self.renderer,tpos,side,self.pilot,(50,0,0),"hp-",0.5,-1,15,300))
             elif(dtype=="blt"):#FIXME the side prob is not solved ,therfore unusable
                 tpos=[self.pilot.pos[0]+random.randint(-20,20),self.pilot.pos[1]+random.randint(-20,20)]
-                self.troopList[side].append(CLS_Building(self.surface,tpos,1-side,self.pilot,3,10,1000,200,-10,30))
+                self.troopList[side].append(CLS_Building(self.renderer,tpos,1-side,self.pilot,3,10,1000,200,-10,30))
             return
         elif(itemtag=="poisoner_B"):#with poison around it self
             pass

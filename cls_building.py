@@ -3,9 +3,9 @@ from cls_bullet import CLS_Bullet
 from calc import cal_dist
 
 class CLS_Building(CLS_item):
-    def __init__(self,screen,pos,side,player,polySideNum=-1,rad=10,hp=1000,atkrange=200,atk=10,interval=30):
+    def __init__(self,renderer,pos,side,player,polySideNum=-1,rad=10,hp=1000,atkrange=200,atk=10,interval=30):
         color=(255*side,0,255*(1-side))# color change according to side
-        super().__init__(screen,rad,pos,[0,0],hp,color,atkrange,atk,interval,side,polySideNum)
+        super().__init__(renderer,rad,pos,[0,0],hp,color,atkrange,atk,interval,side,polySideNum)
         self.cd=interval #cd decrease and reset with time; interval is a constant
         self.pilot = player
         self.bltdur=self.atkrange//self.bltspd*1.1
@@ -31,13 +31,13 @@ class CLS_Building(CLS_item):
                 distance=_distance
         tpos=[self.pos[0],self.pos[1]]
         if(distance<=(self.atkrange)**2):
-            bullet = CLS_Bullet(self.surface,self.pilot,self.bltrad,self.bltdur,tpos,1,self.bltspd,aim,self.bltatk+self.buffatk)
+            bullet = CLS_Bullet(self.renderer,self.pilot,self.bltrad,self.bltdur,tpos,1,self.bltspd,aim,self.bltatk+self.buffatk)
             bulletList.append(bullet)
         return
 
 class CLS_Range_Building(CLS_Building):
-    def __init__(self,screen,pos,side,player,bgcolor,prop,atk=5,polySideNum=-1,rad=10,hp=1000,atkrange=100,dur=1):
-        super().__init__(screen,pos,side,player,polySideNum,rad,hp,atkrange,atk,0)
+    def __init__(self,renderer,pos,side,player,bgcolor,prop,atk=5,polySideNum=-1,rad=10,hp=1000,atkrange=100,dur=1):
+        super().__init__(renderer,pos,side,player,polySideNum,rad,hp,atkrange,atk,0)
         self.bgcolor=bgcolor
         self.prop=prop# which property this attack is working on eg:"hp","speed+-","exp","atk+-"(...expandible)
         self.dur=dur

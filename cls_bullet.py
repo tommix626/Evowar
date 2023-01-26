@@ -2,14 +2,14 @@ from cls_main import CLS_item
 from calc import cal_dist,cal_scrpos,cal_speed
 
 class CLS_Bullet(CLS_item):
-    def __init__(self,screen,player,rad,duration,pos,flag,spd,tgt,atk,totalList=0,selfidx=-1):# for linear: spd is a tuple tgt=0,need totalList,selfidx is index of self in totalList that should not be a target
+    def __init__(self,renderer,player,rad,duration,pos,flag,spd,tgt,atk,totalList=0,selfidx=-1):# for linear: spd is a tuple tgt=0,need totalList,selfidx is index of self in totalList that should not be a target
         self.rad=rad
         self.duration=duration
         self.mode=flag
         self.pos=pos
         self.atk=atk
         self.pilot=player#use for draw self
-        self.surface=screen
+        self.renderer=renderer
         self.color=(0,255,0)
         self.poly=-1
         self.bgcolor=None
