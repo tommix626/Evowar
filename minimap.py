@@ -6,6 +6,11 @@ the minymap class is used inside the cls game agent
 you can draw the minymap at the right top
 @Ling
 '''
+'''
+2023/1/26
+I found a bug that the opponent troops and towers are displayed wrongly in the minymap?
+BUG @Ling
+'''
 class MinyMap:
     def __init__(self,gameAgent,screen):
         self.gameAgent=gameAgent
@@ -16,8 +21,11 @@ class MinyMap:
         self.surface=screen
 
         self.y_len=int(SCREEN_H/5)
+        self.y_g_len=SCREEN_H
         self.x_len=int(self.y_len/GRID_SIZE[1]*GRID_SIZE[0])
+        self.x_g_len=int(self.y_g_len/GRID_SIZE[1]*GRID_SIZE[0])
         self.r=GRID_SIZE[1]/self.y_len
+        self.g_r=GRID_SIZE[1]/self.y_g_len
         #this makes no difference in 2500x2500
     def sync(self):
         self.dotList=self.gameAgent.dotList
@@ -28,6 +36,7 @@ class MinyMap:
         #the difference of a pixel is unnoticable
         pygame.draw.rect(self.surface,(255,255,255),(SCREEN_W-self.x_len-3,0,self.x_len+2,self.y_len+2))
         pygame.draw.rect(self.surface,(0,0,0),(SCREEN_W-self.x_len-2,1,self.x_len,self.y_len))
+    
     def draw(self,x,y,radius,color): 
         """
         x= real x
@@ -53,3 +62,20 @@ class MinyMap:
         for tower in self.troopList[1]:
             self.draw(tower.pos[0],tower.pos[1],2,(255,100,0))
     
+'''
+press m to display giantmap
+'''
+class GiantMap(MinyMap):
+    def draw_background(self):
+        pygame.draw.rect(self.surface,(255,255,255),((SCREEN_W-self.x_g_len)/2-3,0,self.x_g_len+2,self.y_g_len+2))
+        pygame.draw.rect(self.surface,(0,0,0),((SCREEN_W-self.x_g_len)/2-2,1,self.x_g_len,self.y_g_len))
+    def draw(self,x,y,radius,color): 
+        """
+        x= real x
+        y= real y
+        color=(r,g,b)
+        """
+        radius=radius*self.r/self.g_r
+        fx= (SCREEN_W-self.x_g_len)/2+int(x/self.g_r)
+        fy=int(y/self.g_r)
+        pygame.draw.circle(self.surface,color,(fx,fy),radius)
