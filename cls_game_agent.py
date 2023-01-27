@@ -1,4 +1,5 @@
-import pygame, random
+import pygame
+import random
 from calc import cal_dist, cal_scrpos, cal_speed
 from global_variables import (
     FENCE_COLOR,
@@ -10,7 +11,7 @@ from global_variables import (
 from cls_troop import CLS_Troop
 from cls_building import CLS_Building, CLS_Range_Building
 from cls_dot import CLS_Dot
-from minimap import MinyMap, GiantMap
+from minimap import MiniMap, GiantMap
 from renderer import Renderer
 
 
@@ -26,9 +27,10 @@ class CLS_GameAgent(object):
         self.totalList = [[[self.pilot]], [[self.boss]], self.troopList, self.towerList]
         self.troopstrategy = 0
         self.renderer = renderer
-        self.minyMap = MinyMap(self, self.renderer)
+        self.miniMap = MiniMap(self, self.renderer)
         self.giantMap = GiantMap(self, self.renderer)
         self.mapFlag = -1
+        self.inPause = -1
 
     def draw_setting(self):  # draw game map
         for dot in self.dotList:
@@ -62,10 +64,10 @@ class CLS_GameAgent(object):
         self.pilot_eat_dot_check()
         self.boss.action(self.totalList, self.bulletList)
         self.draw_setting()
-        # minymap section, after most calculations
-        self.minyMap.sync()
+        # minimap section, after most calculations
+        self.miniMap.sync()
         self.giantMap.sync()
-        self.minyMap.draw_main()
+        self.miniMap.draw_main()
         if self.mapFlag == 1:
             self.giantMap.draw_main()
 

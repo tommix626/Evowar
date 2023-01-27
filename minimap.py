@@ -4,18 +4,18 @@ from renderer import Renderer
 
 """
 2023/1/25
-the minymap class is used inside the cls game agent
-you can draw the minymap at the right top
+the minimap class is used inside the cls game agent
+you can draw the minimap at the right top
 @Ling
 """
 """
 2023/1/26
-I found a bug that the opponent troops and towers are displayed wrongly in the minymap?
+I found a bug that the opponent troops and towers are displayed wrongly in the minimap?
 BUG @Ling
 """
 
 
-class MinyMap:
+class MiniMap:
     def __init__(self, gameAgent, renderer=Renderer(None)):
         self.gameAgent = gameAgent
         self.dotList = []
@@ -53,7 +53,7 @@ class MinyMap:
         """
         fx = SCREEN_W - self.x_len + int(x / self.r)
         fy = int(y / self.r)
-        self.renderer.draw_minymap_elements(color, fx, fy, radius)
+        self.renderer.draw_minimap_elements(color, fx, fy, radius)
 
         # print(fx,fy)
 
@@ -78,7 +78,7 @@ press m to display giantmap
 """
 
 
-class GiantMap(MinyMap):
+class GiantMap(MiniMap):
     def draw_background(self):
         x_start_location = (SCREEN_W - self.x_g_len) / 2
         x_len = self.x_g_len
@@ -91,4 +91,4 @@ class GiantMap(MinyMap):
         radius = radius * self.r / self.g_r
         fx = (SCREEN_W - self.x_g_len) / 2 + int(x / self.g_r)
         fy = int(y / self.g_r)
-        self.renderer.draw_minymap_elements(color, fx, fy, radius)
+        self.renderer.draw_minimap_elements(color, fx, fy, radius)

@@ -1,4 +1,5 @@
-import pygame, math
+import pygame
+import math
 from global_variables import *
 from calc import *
 import sys
@@ -23,7 +24,7 @@ class Renderer:
             self.surface, (0, 0, 0), (x_start_location - 2, 1, x_len, y_len)
         )
 
-    def draw_minymap_elements(self, color, x, y, radius):
+    def draw_minimap_elements(self, color, x, y, radius):
         pygame.draw.circle(self.surface, color, (x, y), radius)
 
     # dot
