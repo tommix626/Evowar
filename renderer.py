@@ -2,7 +2,6 @@ import pygame
 import math
 from global_variables import *
 from calc import *
-import sys
 
 
 class Renderer:

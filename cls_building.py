@@ -106,7 +106,7 @@ class CLS_Range_Building(CLS_Building):
         return
 
     def action(
-        self, ttList, bulletList
+        self, ttList
     ):  # hero: player/boss depend on which side this building is on
         self.cd -= 1
         self.tgtList = (
@@ -114,13 +114,13 @@ class CLS_Range_Building(CLS_Building):
             + ttList[2][1 - self.side]
             + ttList[3][1 - self.side]
         )  # hero+troop+tower enemyList
-        self.shoot(self.tgtList, bulletList)  # attack enemy
+        self.shoot(self.tgtList)  # attack enemy
         self.draw(
             ttList[0][0][0].fpos, ttList[0][0][0].pos
         )  # self.totalList[0][0][0] is player
         return
 
-    def shoot(self, tgtList, bulletList):
+    def shoot(self, tgtList):
         if self.cd > 0:
             return
         self.cd = self.interval

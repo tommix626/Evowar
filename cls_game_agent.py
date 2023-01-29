@@ -1,11 +1,9 @@
-import pygame
 import random
-from calc import cal_dist, cal_scrpos, cal_speed
+from calc import cal_scrpos
 from global_variables import (
     FENCE_COLOR,
     GRID_SIZE,
     DOT_R_RANGE,
-    expList,
     expConsumption,
 )
 from cls_troop import CLS_Troop
@@ -110,7 +108,7 @@ class CLS_GameAgent(object):
 
     def display_map(self):
         # 1 stands for openmap -1 stands for a closed map
-        self.mapFlag = self.mapFlag * (-1)
+        self.mapFlag = -self.mapFlag
 
     def displaytips(self, word, num):
         # show tips to remind the player

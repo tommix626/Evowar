@@ -1,8 +1,6 @@
-import pygame
 from global_variables import (
     SCREEN_W,
     SCREEN_H,
-    SCREEN_SIZE,
     GRID_SIZE,
     spdList,
     colorList,

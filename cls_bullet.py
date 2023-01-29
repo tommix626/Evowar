@@ -1,5 +1,5 @@
 from cls_main import CLS_item
-from calc import cal_dist, cal_scrpos, cal_speed
+from calc import cal_dist, cal_speed
 
 
 class CLS_Bullet(CLS_item):
@@ -14,7 +14,7 @@ class CLS_Bullet(CLS_item):
         spd,
         tgt,
         atk,
-        totalList=0,
+        totalList=[],
         selfidx=-1,
     ):  # for linear: spd is a tuple tgt=0,need totalList,selfidx is index of self in totalList that should not be a target
         self.rad = rad

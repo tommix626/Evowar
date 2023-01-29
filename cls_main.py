@@ -1,7 +1,4 @@
-from global_variables import SCREEN_H, SCREEN_W, SCREEN_SIZE
-from calc import cal_dist, cal_scrpos
-import pygame
-import math
+from global_variables import SCREEN_SIZE
 from renderer import Renderer
 
 BULLET_RAD_INIT, BULLET_DUR_INIT, BULLET_ATK_INIT, BULLET_SPD_INIT = 3, 80, 50, 3
@@ -54,7 +51,7 @@ class CLS_item(object):
         self.bgcolor = None
         """
         if renderer==None:
-           self.renderer=Renderer(screen) 
+           self.renderer=Renderer(screen)
         else:
             self.renderer=renderer
         return
@@ -71,7 +68,7 @@ class CLS_item(object):
         self.renderer.draw_cls_extras(self, x, y, sideNum)
 
     def draw_background(self, dx, dy):  # for special towers
-        if self.bgcolor == None:
+        if self.bgcolor is None:
             return
         self.renderer.draw_cls_background(self, dx, dy)
         return

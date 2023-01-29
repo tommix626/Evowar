@@ -1,5 +1,5 @@
-import random, pygame
-from global_variables import SCREEN_SIZE, SCREEN_W, SCREEN_H, DOT_R_RANGE, GRID_SIZE
+import random
+from global_variables import DOT_R_RANGE, GRID_SIZE
 
 
 class CLS_Dot(object):

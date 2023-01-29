@@ -1,7 +1,7 @@
-import random, pygame
+import random
 from cls_main import CLS_item
 from cls_bullet import CLS_Bullet
-from calc import cal_dist, cal_scrpos, cal_speed
+from calc import cal_dist, cal_speed
 
 
 class CLS_Troop(CLS_item):

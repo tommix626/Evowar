@@ -51,7 +51,10 @@ class CLS_Mouse_Handler:
                                 if event.type == pygame.QUIT:
                                     pygame.quit()
                                     sys.exit()
-                                if event.key == pygame.K_SPACE:
+                                if (
+                                    event.type == pygame.KEYDOWN
+                                    and event.key == pygame.K_SPACE
+                                ):
                                     self.agent.inPause = -1
                                     return
             case (pygame.MOUSEBUTTONDOWN):

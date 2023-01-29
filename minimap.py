@@ -1,4 +1,3 @@
-import pygame
 from global_variables import SCREEN_W, SCREEN_H, GRID_SIZE
 from renderer import Renderer
 
