@@ -22,7 +22,8 @@ the evowar game end to update at version 0.92,instead i want to make this into a
     0.98a1  file strucutre modification & expConsumption
     0.98a2  minymap 
     0.98a3  bigmap
-    0.99    new renderer       
+    0.99    new renderer
+    0.99a1  added "alt" to halt the player       
             
 ## improvs
     -dot size smaller,circle, dot color brighter,ban red(v0.92)
@@ -67,4 +68,7 @@ if you feel ok just tell me :P
 @Ling
 
 The renderer is changed into a single file. There are still links to the original functions, but I still suggest a direct link to renderer class
+@Ling
+
+left ALT can be used to halt the player for better controls.
 @Ling
