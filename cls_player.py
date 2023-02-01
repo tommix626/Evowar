@@ -48,6 +48,7 @@ class CLS_Player(object):
         self.mouse_x, self.mouse_y = self.fpos[0], self.fpos[1]
         self.buffList = []
         self.buffatk, self.buffspeed = 0, 0
+        self.halt_status=0
         return
 
     # actionList for one frame----------------------
@@ -67,6 +68,8 @@ class CLS_Player(object):
         self.renderer.draw_player(self)
 
     def move(self):
+        if self.halt_status==1:
+            return
         if (
             self.pos[0] + self.speed[0] - self.rad >= 0
             and self.pos[0] + self.speed[0] + self.rad <= GRID_SIZE[0]
@@ -87,6 +90,14 @@ class CLS_Player(object):
             dx / dr * (self.spdLv + self.bspd)
         ) // 0.001 / 1000, (dy / dr * (self.spdLv + self.bspd)) // 0.001 / 1000
         return
+
+    def halt(self):
+        if self.halt_status==0:
+            self.halt_status=1
+            return
+        else:
+            self.halt_status=0
+
 
     def lvup(self):
         # check for abilities upgrade

@@ -39,6 +39,9 @@ class CLS_Mouse_Handler:
                     case (pygame.K_4):
                         self.agent.build_item("poisoner_T", 0, 0, "range")
                         return
+                    # pause the player
+                    case (pygame.K_LALT):
+                        self.agent.pilot.halt()
                     # Render BIG map
                     case (pygame.K_m):
                         self.agent.display_map()
