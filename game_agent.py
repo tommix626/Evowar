@@ -6,14 +6,14 @@ from global_variables import (
     DOT_R_RANGE,
     expConsumption,
 )
-from cls_troop import CLS_Troop
-from cls_building import CLS_Building, CLS_Range_Building
-from cls_dot import CLS_Dot
+from troop import Troop
+from building import Building, Range_Building
+from dot import Dot
 from minimap import MiniMap, GiantMap
 from renderer import Renderer
 
 
-class CLS_GameAgent(object):
+class GameAgent(object):
     def __init__(self, renderer, player, Boss):
         self.pilot = player
         self.boss = Boss
@@ -102,7 +102,7 @@ class CLS_GameAgent(object):
             random.randint(100, 255),
             random.randint(100, 255),
         )
-        dot = CLS_Dot(self.renderer, [x, y], r, color)
+        dot = Dot(self.renderer, [x, y], r, color)
         self.dotList.append(dot)
         return
 
@@ -116,28 +116,28 @@ class CLS_GameAgent(object):
 
     def build_item(
         self, itemtag, side, cost=0, dtype=0
-    ):  # special tower should be build on CLS_Building and CLS_Troop(in another file perhaps?)
+    ):  # special tower should be build on Building and Troop(in another file perhaps?)
         self.pilot.exp -= cost
         if itemtag == "shooter":
             tpos = [self.pilot.pos[0], self.pilot.pos[1]]
             # here
             # self.pilot.exp=self.pilot.exp-expConsumption[3]
             self.towerList[side].append(
-                CLS_Building(self.renderer, tpos, side, self.pilot, 3)
+                Building(self.renderer, tpos, side, self.pilot, 3)
             )
         elif itemtag == "gunner":
             tpos = [
                 self.pilot.pos[0] + random.randint(-20, 20),
                 self.pilot.pos[1] + random.randint(-20, 20),
             ]
-            self.troopList[side].append(CLS_Troop(self.renderer, tpos, side, 0))
+            self.troopList[side].append(Troop(self.renderer, tpos, side, 0))
         elif itemtag == "sniper":
             tpos = [
                 self.pilot.pos[0] + random.randint(-20, 20),
                 self.pilot.pos[1] + random.randint(-20, 20),
             ]
             self.troopList[side].append(
-                CLS_Troop(self.renderer, tpos, side, 0, 0, 7, 0.5, 300, 300, 200, 300)
+                Troop(self.renderer, tpos, side, 0, 0, 7, 0.5, 300, 300, 200, 300)
             )
         elif (
             itemtag == "factory"
@@ -155,7 +155,7 @@ class CLS_GameAgent(object):
                     self.pilot.pos[1] + random.randint(-20, 20),
                 ]
                 self.troopList[side].append(
-                    CLS_Range_Building(
+                    Range_Building(
                         self.renderer,
                         tpos,
                         side,
@@ -176,7 +176,7 @@ class CLS_GameAgent(object):
                     self.pilot.pos[1] + random.randint(-20, 20),
                 ]
                 self.troopList[side].append(
-                    CLS_Building(
+                    Building(
                         self.renderer,
                         tpos,
                         1 - side,
@@ -200,7 +200,7 @@ class CLS_GameAgent(object):
                     self.pilot.pos[1] + random.randint(-20, 20),
                 ]
                 self.troopList[side].append(
-                    CLS_Range_Building(
+                    Range_Building(
                         self.renderer,
                         tpos,
                         side,
@@ -219,7 +219,7 @@ class CLS_GameAgent(object):
                     self.pilot.pos[1] + random.randint(-20, 20),
                 ]
                 self.troopList[side].append(
-                    CLS_Building(
+                    Building(
                         self.renderer,
                         tpos,
                         1 - side,

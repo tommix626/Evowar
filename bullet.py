@@ -1,8 +1,8 @@
-from cls_main import CLS_item
+from main import item
 from calc import cal_dist, cal_speed
 
 
-class CLS_Bullet(CLS_item):
+class Bullet(item):
     def __init__(
         self,
         renderer,

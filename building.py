@@ -1,9 +1,9 @@
-from cls_main import CLS_item
-from cls_bullet import CLS_Bullet
+from main import item
+from bullet import Bullet
 from calc import cal_dist
 
 
-class CLS_Building(CLS_item):
+class Building(item):
     def __init__(
         self,
         renderer,
@@ -66,7 +66,7 @@ class CLS_Building(CLS_item):
                 distance = _distance
         tpos = [self.pos[0], self.pos[1]]
         if distance <= (self.atkrange) ** 2:
-            bullet = CLS_Bullet(
+            bullet = Bullet(
                 self.renderer,
                 self.pilot,
                 self.bltrad,
@@ -81,7 +81,7 @@ class CLS_Building(CLS_item):
         return
 
 
-class CLS_Range_Building(CLS_Building):
+class Range_Building(Building):
     def __init__(
         self,
         renderer,

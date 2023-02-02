@@ -35,7 +35,7 @@ class Renderer:
         pygame.draw.circle(self.surface, color, [dx, dy], rad, 0)
         return
 
-    # cls_main
+    # main
     def draw_cls(self, cls, fpos, ppos, tag=0):  # use player Position to draw self
         if tag == 1:
             print("draw")
@@ -51,7 +51,7 @@ class Renderer:
             return -1
         if tag == 0:
             pygame.draw.circle(self.surface, cls.color, [dx, dy], cls.rad, 0)
-            self.draw_cls_extras(cls, dx, dy, cls.poly)
+            self.draw_extras(cls, dx, dy, cls.poly)
         elif tag == 2:
             if dx < 0 or dx > SCREEN_W or dy < 0 or dy > SCREEN_H:
                 return -1
@@ -60,7 +60,7 @@ class Renderer:
             print("success", cls.color, dx, dy)
         return
 
-    def draw_cls_extras(self, cls, x, y, sideNum):
+    def draw_extras(self, cls, x, y, sideNum):
         pointList = []
         r = cls.rad / 2
         if sideNum == 0:
@@ -74,10 +74,10 @@ class Renderer:
         pygame.draw.polygon(self.surface, cls.dcolor, pointList, 0)
         return
 
-    def draw_cls_background(self, cls, x, y):
+    def draw_background(self, cls, x, y):
         pygame.draw.circle(self.surface, cls.bgcolor, [x, y], cls.atkrange, 0)
 
-    # cls_player
+    # player
     def draw_player(self, player):
         pygame.draw.circle(self.surface, player.color, player.fpos, player.rad, 0)
         pygame.draw.rect(self.surface, player.rectcolor, player.rect, 2)

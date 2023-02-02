@@ -49,9 +49,9 @@ the evowar game end to update at version 0.92,instead i want to make this into a
 
 I decided to add some consumption to exp for spawning different troops, towers or even respawning 
 The current values are as follows
-shooting:2 <-- in CLS_Player.shoot_line()
-respawning:100 <-- this makes respawning a more of stratagy, but it is up to you, in cls_player.rebirth()
-other towers:300 <-- in CLS_GameAgent
+shooting:2 <-- in Player.shoot_line()
+respawning:100 <-- this makes respawning a more of stratagy, but it is up to you, in player.rebirth()
+other towers:300 <-- in GameAgent
 troops:500<-- there seems to be exsisting codes, but I failed to find them
 the list for storing above numbers are in global_variables.expConsumption
 @Ling

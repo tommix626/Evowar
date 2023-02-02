@@ -4,7 +4,7 @@ import pygame
 import sys
 
 
-class CLS_Mouse_Handler:
+class Mouse_Handler:
     def __init__(self, agent):
         self.agent = agent
 

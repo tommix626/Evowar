@@ -1,10 +1,10 @@
 import pygame
 
 
-from mouse_handler import CLS_Mouse_Handler
-from cls_player import CLS_Player
-from cls_building import CLS_Building
-from cls_game_agent import CLS_GameAgent
+from mouse_handler import Mouse_Handler
+from player import Player
+from building import Building
+from game_agent import GameAgent
 from renderer import Renderer
 from global_variables import (
     SCREEN_H,
@@ -22,10 +22,10 @@ clock = pygame.time.Clock()
 shooting_mode = -1
 temp = -1
 renderer = Renderer(screen)
-player = CLS_Player(renderer, 1)
-boss = CLS_Building(renderer, [50, 50], 1, player, 9, 40, 10000)
-agent = CLS_GameAgent(renderer, player, boss)
-mouse_handler = CLS_Mouse_Handler(agent)
+player = Player(renderer, 1)
+boss = Building(renderer, [50, 50], 1, player, 9, 40, 10000)
+agent = GameAgent(renderer, player, boss)
+mouse_handler = Mouse_Handler(agent)
 boss.totalList = agent.totalList
 for i in range(300):
     agent.create_dot()

@@ -11,7 +11,7 @@ the one in renderer
 """
 
 
-class CLS_item(object):
+class item(object):
     def __init__(
         self,
         renderer,
@@ -65,12 +65,12 @@ class CLS_item(object):
     def draw_extras(self, x, y, sideNum=0):
         # moved to renderer
         # FIXME can be reload to mark different buildings (will consider to use it to distinct between enemy and self)
-        self.renderer.draw_cls_extras(self, x, y, sideNum)
+        self.renderer.draw_extras(self, x, y, sideNum)
 
     def draw_background(self, dx, dy):  # for special towers
         if self.bgcolor is None:
             return
-        self.renderer.draw_cls_background(self, dx, dy)
+        self.renderer.draw_background(self, dx, dy)
         return
 
     def check_buff(self):

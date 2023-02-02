@@ -1,10 +1,10 @@
 import random
-from cls_main import CLS_item
-from cls_bullet import CLS_Bullet
+from main import item
+from bullet import Bullet
 from calc import cal_dist, cal_speed
 
 
-class CLS_Troop(CLS_item):
+class Troop(item):
     def __init__(
         self,
         renderer,
@@ -130,7 +130,7 @@ class CLS_Troop(CLS_item):
             if self.cd > 0:
                 return
             self.cd = self.interval
-            bullet = CLS_Bullet(
+            bullet = Bullet(
                 self.renderer,
                 self.pilot,
                 self.bltrad,
