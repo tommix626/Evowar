@@ -2,7 +2,7 @@ import random
 from global_variables import DOT_R_RANGE, GRID_SIZE
 
 
-class CLS_Dot(object):
+class Dot(object):
     def __init__(self, renderer, pos, rad, color=(200, 200, 200)):
         self.rad = rad
         self.color = color

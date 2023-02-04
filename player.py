@@ -10,14 +10,14 @@ from global_variables import (
     expList,
     expConsumption,
 )
-from cls_bullet import CLS_Bullet
+from bullet import Bullet
 from renderer import Renderer
 
 
 PLAYER_HP_INIT = 1000
 
 
-class CLS_Player(object):
+class Player(object):
     def __init__(self, renderer, lv):
         self.speed = [0, 0]  # instant speed
         self.bspd = 0  # bonus speed-multiplyer
@@ -146,7 +146,7 @@ class CLS_Player(object):
     ):  # shoot a bullet to where the player faces
         tspd = [self.speed[0] * self.bltspd, self.speed[1] * self.bltspd]
         tpos = [self.pos[0], self.pos[1]]
-        bullet = CLS_Bullet(
+        bullet = Bullet(
             self.renderer,
             self,
             self.bltrad,
